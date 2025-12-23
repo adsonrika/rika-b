@@ -1,0 +1,11 @@
+{
+  "name": "shared",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./api": "./api/index.ts",
+    "./i18n": "./i18n/index.ts",
+    "./utils": "./utils/index.ts"
+  }
+}
