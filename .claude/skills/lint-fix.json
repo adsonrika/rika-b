@@ -1,0 +1,5 @@
+{
+  "title": "修复代码风格",
+  "description": "自动修复 ESLint 和 Prettier 问题",
+  "command": "lint-fix"
+}

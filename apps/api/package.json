@@ -1,0 +1,19 @@
+{
+  "name": "@rika/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:local": "tsx watch --env-file .env ../../scripts/api-dev-server.ts",
+    "build": "vite build",
+    "check": "tsc --noEmit && eslint src",
+    "test": "vitest run",
+    "clean": "tsx ../../scripts/clean.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.4",
+    "@vercel/node": "^5.3.7",
+    "rollup-plugin-node-externals": "^8.1.2",
+    "tsx": "^4.20.5",
+    "vercel": "^42.3.0"
+  }
+}

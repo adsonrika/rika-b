@@ -1,0 +1,5 @@
+{
+  "title": "运行所有检查",
+  "description": "运行类型检查和 lint 检查，确保代码质量",
+  "command": "check-all"
+}

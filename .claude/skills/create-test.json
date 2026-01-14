@@ -1,0 +1,5 @@
+{
+  "title": "创建符合项目规范的测试",
+  "description": "根据项目测试构建规范创建测试文件",
+  "command": "create-test"
+}

@@ -1,5 +1,5 @@
 packages:
-  - "shared"
+  - "apps/*"
+  - "packages/*"
 
-onlyBuiltDependencies:
-  - esbuild
+symlink: true

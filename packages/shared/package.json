@@ -1,0 +1,45 @@
+{
+  "name": "@rika/shared",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./api": {
+      "types": "./dist/api/index.d.ts",
+      "default": "./dist/api/index.js"
+    },
+    "./blog": {
+      "default": "./dist/blog/index.js",
+      "node": {
+        "import": "./dist/blog/index.js",
+        "types": "./dist/blog/index.d.ts"
+      }
+    },
+    "./git": {
+      "types": "./dist/git/index.d.ts",
+      "default": "./dist/git/index.js"
+    },
+    "./i18n": {
+      "types": "./dist/i18n/index.d.ts",
+      "default": "./dist/i18n/index.js"
+    },
+    "./logger": {
+      "types": "./dist/logger/index.d.ts",
+      "default": "./dist/logger/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "default": "./dist/utils/index.js"
+    },
+    "./vite-plugins": {
+      "types": "./dist/vite-plugins/index.d.ts",
+      "default": "./dist/vite-plugins/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "tsc --noEmit && eslint src",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "tsx ../../scripts/clean.ts"
+  }
+}

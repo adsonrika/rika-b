@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+
+    /* API 是 Node 运行时代码 */
+    "types": ["node"],
+
+    /* Vite / esbuild 负责 emit */
+    "noEmit": true
+  },
+  "include": [
+    "../../global.d.ts",
+    "vite.config.ts",
+    "src",
+    "__test"
+  ],
+}

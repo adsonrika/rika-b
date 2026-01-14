@@ -1,0 +1,5 @@
+{
+  "title": "添加 API 端点",
+  "description": "创建新的 API 端点，遵循项目规范",
+  "command": "add-api"
+}

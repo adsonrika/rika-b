@@ -1,0 +1,5 @@
+{
+  "title": "添加国际化文本",
+  "description": "添加新的国际化文本，遵循项目 i18next 规范",
+  "command": "add-i18n"
+}
