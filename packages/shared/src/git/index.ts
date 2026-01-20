@@ -1,5 +1,23 @@
 import { createGitHubRestClient } from './github.js';
-import type { GitClient, GitClientOptions } from './type.js';
+import type {
+  GitClient,
+  GitClientOptions,
+  UploadFileOptions,
+  UploadImageOptions,
+  DeleteFileOptions,
+  GitTreeResponse,
+  UploadResult
+} from './type.js';
+
+export type {
+  GitClient,
+  GitClientOptions,
+  UploadFileOptions,
+  UploadImageOptions,
+  DeleteFileOptions,
+  GitTreeResponse,
+  UploadResult
+};
 
 
 type GitClientType = GitClient['type']

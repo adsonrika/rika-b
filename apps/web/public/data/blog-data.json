@@ -1,0 +1,42 @@
+[
+  {
+    "absolutePath": "C:\\dev\\projects\\rika-b\\blog\\vue3-composition-api.md",
+    "slug": "vue3-composition-api",
+    "title": "Understanding Vue 3 Composition API",
+    "tags": [
+      "vue",
+      "frontend",
+      "tutorial"
+    ],
+    "desc": "A deep dive into Vue 3's Composition API and how it compares to the Options API.",
+    "content": "# Understanding Vue 3 Composition API\n\n\n\nVue 3 introduced the Composition API, a new way to organize component logic that offers better TypeScript support and more flexible code reuse.\n\n## What is the Composition API?\n\nThe Composition API is a set of APIs that allows you to use Vue's features outside of a component, such as:\n\n- Reactive state (`ref`, `reactive`)\n- Computed properties\n- Lifecycle hooks\n- Dependency injection\n\n## Basic Example\n\n```javascript\nimport { ref, computed } from 'vue'\n\nexport default {\n  setup() {\n    const count = ref(0)\n    const doubled = computed(() => count.value * 2)\n\n    function increment() {\n      count.value++\n    }\n\n    return { count, doubled, increment }\n  }\n}\n```\n\n## With `<script setup>`\n\nVue 3.1+ provides an even more concise syntax:\n\n```vue\n<script setup>\nimport { ref, computed } from 'vue'\n\nconst count = ref(0)\nconst doubled = computed(() => count.value * 2)\n\nfunction increment() {\n  count.value++\n}\n</script>\n\n<template>\n  <div>\n    <p>Count: {{ count }}</p>\n    <p>Doubled: {{ doubled }}</p>\n    <button @click=\"increment\">Increment</button>\n  </div>\n</template>\n```\n\n## Benefits\n\n1. **Better Logic Organization**: Group related code together\n2. **Improved Type Inference**: Better TypeScript support\n3. **More Flexible Code Reuse**: Composables instead of mixins\n4. **Smaller Bundle Size**: Tree-shaking friendly\n\n## Creating a Composable\n\n```javascript\n// useMouse.js\nimport { ref, onMounted, onUnmounted } from 'vue'\n\nexport function useMouse() {\n  const x = ref(0)\n  const y = ref(0)\n\n  function update(event) {\n    x.value = event.pageX\n    y.value = event.pageY\n  }\n\n  onMounted(() => window.addEventListener('mousemove', update))\n  onUnmounted(() => window.removeEventListener('mousemove', update))\n\n  return { x, y }\n}\n```\n\n## Conclusion\n\nThe Composition API is a powerful addition to Vue 3 that provides more flexibility and better code organization. While the Options API is still fully supported, the Composition API is recommended for new projects.\n\n## Further Reading\n\n- [Vue 3 Documentation](https://vuejs.org/)\n- [Composition API RFC](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0013-composition-api.md)\n- [VueUse](https://vueuse.org/) - A collection of Vue Composition Utilities",
+    "createdAt": "2026-01-19T07:18:44.354Z",
+    "updatedAt": "2026-01-19T07:18:44.355Z"
+  },
+  {
+    "absolutePath": "C:\\dev\\projects\\rika-b\\blog\\hello-world.md",
+    "slug": "hello-world",
+    "title": "Hello World",
+    "tags": [
+      "welcome",
+      "introduction"
+    ],
+    "desc": "Welcome to my blog! This is the first post where I share my thoughts on technology and development.",
+    "content": "# Hello World\n\n\n\nWelcome to my new blog! I'm excited to share my journey in software development, tutorials, and insights about the technologies I work with.\n\n## What to Expect\n\nIn this blog, you'll find content about:\n\n- **Frontend Development**: Vue.js, React, and modern web technologies\n- **Backend Systems**: Node.js, serverless architectures, and API design\n- **DevOps**: CI/CD, deployment strategies, and infrastructure\n- **Best Practices**: Clean code, testing, and software architecture\n\n## Why I Started Writing\n\nWriting helps me clarify my thoughts and deepen my understanding of complex topics. I believe that sharing knowledge is one of the best ways to grow as a developer.\n\n## Code Example\n\nHere's a simple JavaScript example:\n\n```javascript\nfunction greet(name) {\n  return `Hello, ${name}!`\n}\n\nconsole.log(greet('World'))\n```\n\n## Stay Tuned\n\nI'll be publishing new content regularly. Make sure to check back often or follow me on social media for updates!\n\nThanks for reading, and I hope you find something useful here.",
+    "createdAt": "2026-01-19T07:18:28.122Z",
+    "updatedAt": "2026-01-19T07:18:28.122Z"
+  },
+  {
+    "absolutePath": "C:\\dev\\projects\\rika-b\\blog\\test.md",
+    "slug": "test",
+    "title": "title 这是文章标题",
+    "tags": [
+      "aaa",
+      "bbbb"
+    ],
+    "desc": "测试文章",
+    "content": "### title 这是文章标题\n\n![alt text](image.png)",
+    "createdAt": "2025-12-24T09:14:55.881Z",
+    "updatedAt": "2025-12-25T05:57:14.604Z"
+  }
+]

@@ -1,13 +1,22 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import { fileURLToPath } from 'node:url';
-import { sourceFilePlugin } from '@rika/shared/vite-plugins';
+import { defineConfig, type PluginOption } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { fileURLToPath } from 'node:url'
+import { sourceFilePlugin } from '@rika/shared/vite-plugins'
 
-const srcDir = fileURLToPath(new URL('./src', import.meta.url));
+const srcDir = fileURLToPath(new URL('./src', import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue(), sourceFilePlugin()],
+  ssgOptions: {
+    // Function to include routes for SSG
+    // This runs in Node.js context during build time
+    includedRoutes: async () => {
+      // Dynamic import to avoid bundling in client build
+      const { includeRoutes } = await import('./src/ssg.ts')
+      return includeRoutes()
+    },
+  },
   resolve: {
     alias: {
       '@': srcDir,
@@ -23,7 +32,7 @@ export default defineConfig({
     watch: {
       // 注意 pnpm 或 yarn workspace 会在 node_modules 创建 symlink
       // 需要监听 shared 源码
-      ignored: ['!**/packages/shared/**']
-    }
+      ignored: ['!**/packages/shared/**'],
+    },
   },
-});
+})

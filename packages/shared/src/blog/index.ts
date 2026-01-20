@@ -3,9 +3,11 @@ import path from 'node:path';
 
 export interface ParseBlogResult {
   absolutePath: string
+  slug: string
   title: string
   tags: string[]
   desc: string
+  content: string
   createdAt: string
   updatedAt: string
 }
@@ -64,12 +66,15 @@ export async function extractBlog(absolutePath: string): Promise<ParseBlogResult
     throw new Error(`解析失败：${absolutePath} 未找到标题`);
   }
   const { tags, desc } = parseHiddenMetadata(hidden.raw);
+  const slug = path.basename(absolutePath, '.md');
 
   return {
     absolutePath,
+    slug,
     title,
     tags,
     desc,
+    content: hidden.rest.trim(),
     createdAt: fileStat.birthtime.toISOString(),
     updatedAt: fileStat.mtime.toISOString(),
   };
@@ -104,3 +109,15 @@ export async function extractBlogsFromDir(dirAbsolutePath: string): Promise<Pars
   }
   return results;
 }
+
+export async function extractBlogBySlug(dirAbsolutePath: string, slug: string): Promise<ParseBlogResult | null> {
+  const markdownFiles = await collectMarkdownFiles(dirAbsolutePath);
+  const targetFile = markdownFiles.find((file) => path.basename(file, '.md') === slug);
+
+  if (!targetFile) {
+    return null;
+  }
+
+  return extractBlog(targetFile);
+}
+

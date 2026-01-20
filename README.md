@@ -15,6 +15,12 @@
 ├── apps/
 │   ├── web/              # Vue 3 + Vite 前端应用
 │   │   ├── src/          # Vue 组件和业务逻辑
+│   │   │   ├── components/  # 组件（Sidebar, ArticleCard, TOC 等）
+│   │   │   ├── views/       # 页面（Home, BlogPost, Archives, Tag）
+│   │   │   ├── stores/      # Pinia 状态管理
+│   │   │   └── router/      # Vue Router 配置
+│   │   ├── public/       # 静态资源
+│   │   │   └── data/       # 博客数据 JSON（构建生成）
 │   │   ├── vite.config.ts
 │   │   └── package.json
 │   └── api/              # Vercel Serverless Functions
@@ -31,6 +37,7 @@
 │       │   ├── logger/   # 日志工具
 │       │   └── utils/    # 通用工具（retry、fetch、频率控制等）
 │       └── package.json  # 使用 conditional exports
+├── blog/                 # Markdown 博客文章目录
 ├── scripts/              # 构建和开发脚本
 ├── tsconfig.base.json    # 共享 TypeScript 配置
 ├── vitest.config.ts      # Vitest 测试配置
@@ -113,7 +120,7 @@ pnpm clean
 pnpm test
 
 # 运行单个测试文件
-pnpm test packages/shared/__test__/parse-blog.test.ts
+pnpm test packages/shared/__test/parse-blog.test.ts
 ```
 
 ### 预览构建产物
@@ -127,8 +134,13 @@ pnpm preview
 
 ```bash
 # Web 应用
+pnpm -C apps/web dev            # 启动开发服务器
 pnpm -C apps/web build          # 构建前端（输出到 apps/web/dist/）
+pnpm -C apps/web build:ssg      # SSG 构建静态站点
 pnpm -C apps/web check          # 类型检查 + lint
+
+# 博客相关
+pnpm -C apps/web build:blog-data  # 生成博客数据 JSON 文件
 
 # API
 pnpm -C apps/api build          # 构建 API（输出到 apps/api/dist/）
@@ -159,7 +171,8 @@ import { ApiErrorResponse } from '@rika/shared/api'
 import { errorCodeToI18nKey } from '@rika/shared/api'
 
 // Blog 相关
-import { parseBlogPost } from '@rika/shared/blog'
+import { parseBlogPost, extractBlogsFromDir } from '@rika/shared/blog'
+import type { ParseBlogResult } from '@rika/shared/blog'
 
 // Git 操作
 import { getGitCommit } from '@rika/shared/git'
@@ -174,7 +187,7 @@ import { logger } from '@rika/shared/logger'
 import { retry, fetchWithTimeout } from '@rika/shared/utils'
 
 // Vite 插件
-import { somePlugin } from '@rika/shared/vite-plugins'
+import { sourceFilePlugin } from '@rika/shared/vite-plugins'
 ```
 
 ### 后端架构
@@ -197,6 +210,88 @@ import { somePlugin } from '@rika/shared/vite-plugins'
 - **构建输出**: Vite 构建到 `apps/web/dist/`
 - **API 代理**: 开发时，Vite 将 `/api/*` 代理到 `localhost:3000`（见 `apps/web/vite.config.ts`）
 - **路径别名**: Vite 配置中 `@/` 映射到 `apps/web/src/`
+- **博客系统**: 基于 Markdown 的静态博客，支持 SSG（Static Site Generation）
+
+## 博客系统
+
+项目包含一个完整的博客系统，支持 Markdown 写作、标签分类、归档、目录导航等功能。
+
+### 功能特性
+
+- 📝 **Markdown 写作**: 在 `/blog` 目录下使用 Markdown 文件写博客
+- 🎨 **现代 UI 设计**: 灵感来自 Hugo Stack 主题，简洁优雅
+- 🌓 **深色/浅色主题**: 支持主题切换，自动跟随系统偏好
+- 📱 **响应式设计**: 完美适配桌面和移动端
+- 📑 **目录导航**: 自动生成文章目录，支持点击跳转
+- 🏷️ **标签系统**: 支持文章标签分类和标签聚合页面
+- 📄 **归档页面**: 按年份归档展示所有文章
+- 💻 **代码高亮**: 基于 highlight.js 的语法高亮
+- 📋 **代码复制**: 代码块支持一键复制功能
+- ⚡ **SSG 支持**: 使用 vite-ssg 生成静态 HTML
+
+### 写博客
+
+在 `blog/` 目录创建 Markdown 文件：
+
+```markdown
+---
+title: 文章标题
+tags: 标签1, 标签2
+desc: 文章描述
+---
+
+# 文章标题
+
+这里是文章内容...
+
+## 二级标题
+
+正文内容...
+```
+
+### 博客路由
+
+- `/` - 首页（展示文章列表）
+- `/blog/:slug` - 博客文章详情页
+- `/archives` - 文章归档页（按年份分组）
+- `/tag/:tag` - 标签聚合页
+
+### 博客数据流程
+
+```
+blog/*.md
+    ↓ (scripts/build-blog-data.ts)
+public/data/blog-data.json
+    ↓ (fetch in browser)
+Pinia Store (useBlogStore)
+    ↓
+Views & Components
+```
+
+### 构建博客数据
+
+```bash
+# 生成博客数据 JSON 文件
+pnpm -C apps/web build:blog-data
+```
+
+### 相关组件
+
+- **MainLayout**: 主布局（左侧边栏 + 中间内容 + 右侧边栏）
+- **Sidebar**: 左侧边栏（个人信息、导航、主题切换）
+- **ArticleCard**: 文章卡片组件
+- **TOC**: 目录组件（Table of Contents）
+- **TagWidget**: 标签云组件
+- **BlogPost**: 博客文章详情页
+- **Archives**: 归档页面
+- **Tag**: 标签聚合页面
+
+### 博客相关工具
+
+- `@rika/shared/blog` - 博客解析工具
+  - `parseBlogPost()` - 解析单篇博客
+  - `extractBlogsFromDir()` - 批量解析博客目录
+  - `ParseBlogResult` - 博客数据类型
 
 ### TypeScript 配置
 

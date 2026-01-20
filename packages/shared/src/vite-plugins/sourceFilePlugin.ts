@@ -1,35 +1,46 @@
-import type { Plugin } from 'vite';
+import type { PluginOption } from 'vite'
+import { parse } from '@vue/compiler-sfc'
 
-export function sourceFilePlugin(): Plugin {
+export function sourceFilePlugin(): PluginOption {
   return {
     name: 'vite:source-file-inject',
     enforce: 'pre',
     transform(code, id) {
       if (id.includes('node_modules') || id.startsWith('transforming')) {
-        return null;
+        return null
       }
-      if (!/\.(ts|tsx|js|jsx)$/.test(id.split('?')[0] ?? '')
-          && !/\?vue&type=script&.*lang\.ts$/.test(id)) {
-        return null;
+      if (!/\.(ts|tsx|js|jsx|vue)$/.test(id)) {
+        return null
       }
       if (code.includes('const __SOURCE_FILE__=')) {
-        return null;
+        return null
       }
 
-      const normalizedId = id.replace(/\\/g, '/');
-      const root = process.cwd().replace(/\\/g, '/');
+      const normalizedId = id.replace(/\\/g, '/')
+      const root = process.cwd().replace(/\\/g, '/')
       const relativePath = normalizedId.startsWith(root)
         ? normalizedId.slice(root.length + 1)
-        : normalizedId;
+        : normalizedId
 
       // 注入 __SOURCE_FILE__，兼容 ESM 和打包
-      const source = JSON.stringify(relativePath);
-      const inject = `const __SOURCE_FILE__=${source};\n`;
-      console.log(`source-file-inject ${source}`);
+      const source = JSON.stringify(relativePath)
+      const newCode = (() => {
+        const inject = `  const __SOURCE_FILE__=${source};\n`
+        if (!id.endsWith('.vue')) {
+          return inject + code
+        }
+        const { descriptor } = parse(code)
+        if (descriptor.scriptSetup) {
+          const start = descriptor.scriptSetup.loc.start.offset
+          code = code.slice(0, start) + inject + code.slice(start)
+        }
+        return code
+      })()
+      console.log(`source-file-inject ${source}`)
       return {
-        code: inject + code,
+        code: newCode,
         map: null,
-      };
+      }
     },
-  };
+  }
 }

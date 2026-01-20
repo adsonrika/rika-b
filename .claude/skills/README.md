@@ -5,20 +5,26 @@
 ## 可用技能
 
 ### 1. `/create-test` ✅
+
 创建符合项目规范的测试文件
-- 测试文件位置：`**/__test__/**/*.test.ts`
+
+- 测试文件位置：`**/__test/**/*.test.ts`
 - 使用 `run_<功能>_test` 命名辅助方法
 - 使用 `make*` 前缀命名数据工厂
-- 参考：[packages/shared/__test/parse-blog.test.ts](../../packages/shared/__test/parse-blog.test.ts)
+- 参考：[packages/shared/\_\_test/parse-blog.test.ts](../../packages/shared/__test/parse-blog.test.ts)
 
 ### 2. `/check-all` ✅
+
 运行所有类型检查和 lint 检查
+
 - 运行 `pnpm check` - TypeScript 类型检查
 - 运行 `pnpm lint` - ESLint 检查
 - 提交前必用
 
 ### 3. `/add-api` ✅
+
 创建新的 API 端点
+
 - 文件位置：`apps/api/src/*.ts`
 - 使用 `VercelRequest`/`VercelResponse` 类型
 - 使用 `logger(__SOURCE_FILE__)` 记录日志
@@ -26,14 +32,18 @@
 - 参考：[apps/api/src/health.ts](../../apps/api/src/health.ts)
 
 ### 4. `/add-i18n` ✅
+
 添加国际化文本
+
 - 更新 `packages/shared/src/i18n/type.ts` 类型
 - 添加中英文翻译
 - 使用 `satisfies I18nConfigType` 确保类型安全
 - 修改后需构建 shared 包
 
 ### 5. `/lint-fix` ✅
+
 自动修复代码风格问题
+
 - 运行 `pnpm lint:fix` - ESLint 自动修复
 - 运行 `pnpm format` - Prettier 格式化
 - 自动修复后验证
@@ -47,6 +57,7 @@
 ```
 
 例如：
+
 ```
 /create-test
 /check-all
@@ -74,6 +85,7 @@
 2. `<skill-name>.json` - 技能配置文件
 
 JSON 格式：
+
 ```json
 {
   "title": "技能标题",

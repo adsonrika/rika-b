@@ -9,9 +9,9 @@
 ## 技能执行指令
 
 1. **确定测试位置**
-   - 测试文件必须放在 `__test__` 文件夹内
-   - 对于 packages/shared，测试放在 `packages/shared/__test__/`
-   - 对于 apps，测试放在对应 workspace 的 `__test__/` 目录
+   - 测试文件必须放在 `__test` 文件夹内
+   - 对于 packages/shared，测试放在 `packages/shared/__test/`
+   - 对于 apps，测试放在对应 workspace 的 `__test/` 目录
 
 2. **设计测试辅助方法**
    - 创建 `run_<功能>_test` 命名的测试辅助函数
@@ -36,7 +36,7 @@
 
 - ✅ 所有测试执行 helper 必须使用 `run_<功能>_test` 命名
 - ✅ 构造测试数据的工厂使用 `make*` 前缀，必须提供默认值
-- ✅ 测试文件位置：`**/__test__/**/*.test.ts`
+- ✅ 测试文件位置：`**/__test/**/*.test.ts`
 - ✅ 测试框架：Vitest（已启用 globals）
 - ✅ 测试必须简洁易读，通过辅助方法降低干扰
 

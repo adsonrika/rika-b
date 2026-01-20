@@ -13,7 +13,8 @@
     "preview": "pnpm -C apps/web build && pnpm -C apps/api dev:local",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "build": "pnpm -C packages/shared build && pnpm -C apps/web build && pnpm -C apps/api build",
+    "build": "tsx scripts/build-blog-data.ts && pnpm -C packages/shared build && pnpm -C apps/web build && pnpm -C apps/api build",
+    "build:blog": "tsx scripts/build-blog-data.ts",
     "check": "pnpm -C packages/shared check && pnpm -C apps/web check && pnpm -C apps/api check",
     "test": "vitest run",
     "clean": "tsx ./scripts/clean.ts --workspaces"
@@ -24,16 +25,17 @@
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "@types/node": "^24.10.4",
+    "@vue/compiler-sfc": "^3.5.27",
     "concurrently": "^9.1.0",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^9.1.0",
-    "typescript-eslint": "^8.19.1",
     "eslint-plugin-vue": "^9.33.0",
-    "vue-eslint-parser": "^10.2.0",
     "prettier": "^3.4.2",
     "tsx": "^4.20.5",
     "typescript": "~5.9.3",
-    "vite": "^7.2.4",
-    "vitest": "^2.1.9"
+    "typescript-eslint": "^8.19.1",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.17",
+    "vue-eslint-parser": "^10.2.0"
   }
 }

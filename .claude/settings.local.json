@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm -C apps/web add:*)",
+      "Bash(pnpm build:ssg:*)",
+      "Bash(pnpm check:*)",
+      "Bash(pnpm:*)",
+      "mcp__zread__search_doc",
+      "mcp__web-search-prime__webSearchPrime",
+      "mcp__web-reader__webReader",
+      "Bash(readlink:*)",
+      "mcp__zread__get_repo_structure",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(npx vue-tsc:*)"
+    ]
+  }
+}
